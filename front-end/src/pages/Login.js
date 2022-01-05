@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import md5 from 'md5';
 
-import { validateEmail, validatePassworld } from '../helper/validations';
 import api from '../helper/api';
+import { validateEmail, validatePassword } from '../helper/validations';
 
 function Login() {
   const redirect = useNavigate();
@@ -15,10 +15,9 @@ function Login() {
   const [error, setError] = useState('');
 
   const validateData = () => {
-
     if (email === '' && password === '') return;
 
-    if (validateEmail(email) && validatePassworld(password)) {
+    if (validateEmail(email) && validatePassword(password)) {
       setIsInvalid(false);
       setError('');
     } else {
@@ -40,13 +39,11 @@ function Login() {
     };
 
     try {
-      const { data: user, message } = await api.post('/login', loginBody);
+      const successStatus = 201;
+      console.log(loginBody);
+      const { data: user, message, status } = await api.post('/login', loginBody);
 
-      if (message) {
-        setError(message);
-      } else {
-        redirect(`/${user.role}`);
-      }
+      return status === successStatus ? redirect(`/${user.role}`) : setError(message);
     } catch (err) {
       setError('Tente novamente mais tarde.');
     }
@@ -59,8 +56,6 @@ function Login() {
         <p>Login</p>
         <input
           type="email"
-          id="email"
-          name="email"
           value={ email }
           onChange={ (e) => setEmail(e.target.value) }
           placeholder="Insira seu email"
@@ -69,7 +64,6 @@ function Login() {
         <p>Senha</p>
         <input
           type="password"
-          name="password"
           value={ password }
           onChange={ (e) => setPassword(e.target.value) }
           placeholder="Insira sua senha"
