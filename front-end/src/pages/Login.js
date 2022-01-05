@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-// import md5 from 'md5';
+import api from '../helper/api';
+import md5 from 'md5';
 
 function Login() {
   const redirect = useNavigate();
@@ -34,19 +34,25 @@ function Login() {
 
   useEffect(validateData, [email, password]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const encriptedPassword = md5(password);
+     const encriptedPassword = md5(password);
 
-    // const loginBody = {
-    //   email,
-    //   password: encriptedPassword,
-    // };
-
-    // requisição
-
-    redirect('/customer');
+    const loginBody = {
+      email,
+      password: encriptedPassword,
+    };
+    try{
+    const response = await api.post('/login', loginBody);
+    if(response.message) {
+      setError(response.message)
+    }
+     else { redirect('/customer'); }
+    } catch(error){
+      setError(error.message)
+    }
+  
   };
 
   return (
