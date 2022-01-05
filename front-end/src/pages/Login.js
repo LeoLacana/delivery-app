@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import md5 from 'md5';
 
+import { validateEmail, validatePassworld } from '../helper/validations';
 import api from '../helper/api';
 
 function Login() {
@@ -14,12 +15,10 @@ function Login() {
   const [error, setError] = useState('');
 
   const validateData = () => {
-    const emailRegex = /^[a-z][.a-z\d_-]+[^-]@[a-z-]{2,12}\.[a-z]{2,3}(\.[a-z]{2})?$/i;
-    const minLength = 6;
 
     if (email === '' && password === '') return;
 
-    if (emailRegex.test(email) && password.length >= minLength) {
+    if (validateEmail(email) && validatePassworld(password)) {
       setIsInvalid(false);
       setError('');
     } else {

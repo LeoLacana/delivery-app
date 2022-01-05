@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
-
+import Register from './pages/Register'
 import Login from './pages/Login';
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={ <Navigate to="/login" /> } />
         <Route path="/login" element={ <Login /> } />
+        <Route path="/register" element={ <Register /> } />
       </Routes>
     </BrowserRouter>
   );
