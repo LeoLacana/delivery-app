@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../helper/api';
 import md5 from 'md5';
+
+import api from '../helper/api';
 
 function Login() {
   const redirect = useNavigate();
@@ -11,11 +12,6 @@ function Login() {
 
   const [isInvalid, setIsInvalid] = useState(true);
   const [error, setError] = useState('');
-
-  const handleInputChange = async ({ target: { name, value } }) => {
-    if (name === 'email') setEmail(value);
-    if (name === 'password') setPassword(value);
-  };
 
   const validateData = () => {
     const emailRegex = /^[a-z][.a-z\d_-]+[^-]@[a-z-]{2,12}\.[a-z]{2,3}(\.[a-z]{2})?$/i;
@@ -37,23 +33,24 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-     const encriptedPassword = md5(password);
+    const encriptedPassword = md5(password);
 
     const loginBody = {
       email,
       password: encriptedPassword,
     };
 
-    try{
-      const response = await api.post('/login', loginBody);
-      if(response.message) {
-        setError(response.message)
+    try {
+      const { data: user, message } = await api.post('/login', loginBody);
+
+      if (message) {
+        setError(message);
+      } else {
+        redirect(`/${user.role}`);
+      }
+    } catch (err) {
+      setError('Tente novamente mais tarde.');
     }
-      else { redirect('/customer'); }
-    } catch(error){
-        setError(error.message)
-    }
-  
   };
 
   return (
@@ -66,7 +63,7 @@ function Login() {
           id="email"
           name="email"
           value={ email }
-          onChange={ handleInputChange }
+          onChange={ (e) => setEmail(e.target.value) }
           placeholder="Insira seu email"
           data-testid="common_login__input-email"
         />
@@ -75,7 +72,7 @@ function Login() {
           type="password"
           name="password"
           value={ password }
-          onChange={ handleInputChange }
+          onChange={ (e) => setPassword(e.target.value) }
           placeholder="Insira sua senha"
           data-testid="common_login__input-password"
         />
