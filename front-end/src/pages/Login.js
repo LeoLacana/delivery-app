@@ -43,14 +43,15 @@ function Login() {
       email,
       password: encriptedPassword,
     };
+
     try{
-    const response = await api.post('/login', loginBody);
-    if(response.message) {
-      setError(response.message)
+      const response = await api.post('/login', loginBody);
+      if(response.message) {
+        setError(response.message)
     }
-     else { redirect('/customer'); }
+      else { redirect('/customer'); }
     } catch(error){
-      setError(error.message)
+        setError(error.message)
     }
   
   };
