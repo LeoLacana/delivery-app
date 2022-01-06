@@ -5,11 +5,13 @@ const create = async (req, res) => {
   try {
     const user = await registerModel.create(name, email, password);
     if (!user) {
-      return res.status(409).json({
+      return res.status(204).json({
         message: 'Nome ou email já cadastrado'
       });
     }
-    return res.status(201).json(user);
+    return res.status(201).json({
+      message: 'Usuário cadastrado com sucesso'
+    });
   } catch (error) {}
 };
 
