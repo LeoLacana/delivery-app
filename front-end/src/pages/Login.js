@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import md5 from 'md5';
 
 import api from '../helper/api';
 import saveTokenAndRedirect from '../helper/saveTokenAndRedirect';
@@ -32,12 +31,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const encriptedPassword = md5(password);
-
-    const loginBody = {
-      email,
-      password: encriptedPassword,
-    };
+    const loginBody = { email, password };
 
     try {
       const successStatus = 201;

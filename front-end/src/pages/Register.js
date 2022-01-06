@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import md5 from 'md5';
 
 import saveTokenAndRedirect from '../helper/saveTokenAndRedirect';
 import { validateEmail, validatePassword, validateName } from '../helper/validations';
@@ -40,11 +39,10 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const encriptedPassword = md5(password);
     const registerBody = {
       name,
       email,
-      password: encriptedPassword,
+      password,
     };
 
     try {
