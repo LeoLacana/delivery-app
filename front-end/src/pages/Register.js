@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import md5 from 'md5';
 
+import saveTokenAndRedirect from '../helper/saveTokenAndRedirect';
 import { validateEmail, validatePassword, validateName } from '../helper/validations';
 
 function Register() {
@@ -36,19 +37,10 @@ function Register() {
 
   useEffect(validateData, [name, email, password]);
 
-  const showSuccessAndRedirect = (message) => {
-    const oneSecond = 1000;
-    setError(message);
-    setTimeout(() => {
-      redirect(`/${user.role}`);
-    }, oneSecond);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const encriptedPassword = md5(password);
-
     const registerBody = {
       name,
       email,
@@ -58,10 +50,10 @@ function Register() {
     try {
       const successStatus = 201;
       console.log(registerBody);
-      const { message, status } = await api.post('/register', registerBody);
+      const { message, status, user } = await api.post('/register', registerBody);
 
       return status === successStatus
-        ? showSuccessAndRedirect(message)
+        ? saveTokenAndRedirect(redirect, user)
         : setError(message);
     } catch (err) {
       setError('Tente novamente mais tarde.');

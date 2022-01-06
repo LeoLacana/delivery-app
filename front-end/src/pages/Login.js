@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import md5 from 'md5';
 
 import api from '../helper/api';
+import saveTokenAndRedirect from '../helper/saveTokenAndRedirect';
 import { validateEmail, validatePassword } from '../helper/validations';
 
 function Login() {
@@ -43,7 +44,9 @@ function Login() {
       console.log(loginBody);
       const { data: user, message, status } = await api.post('/login', loginBody);
 
-      return status === successStatus ? redirect(`/${user.role}`) : setError(message);
+      return status === successStatus
+        ? saveTokenAndRedirect(redirect, user)
+        : setError(message);
     } catch (err) {
       setError('Tente novamente mais tarde.');
     }
