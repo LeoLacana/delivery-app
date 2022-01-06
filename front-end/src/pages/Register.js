@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import saveTokenAndRedirect from '../helper/saveTokenAndRedirect';
+import api from '../helper/api';
 import { validateEmail, validatePassword, validateName } from '../helper/validations';
 
 function Register() {
@@ -47,13 +47,13 @@ function Register() {
 
     try {
       const successStatus = 201;
-      console.log(registerBody);
-      const { message, status, user } = await api.post('/register', registerBody);
+      const { message, status } = await api.post('/register', registerBody);
 
       return status === successStatus
-        ? saveTokenAndRedirect(redirect, user)
+        ? redirect('/login')
         : setError(message);
     } catch (err) {
+      console.log(err.message);
       setError('Tente novamente mais tarde.');
     }
   };

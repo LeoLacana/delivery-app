@@ -6,9 +6,9 @@ const registerRoute = require('../routers/register.route');
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
 app.use('/register', registerRoute);
 // app.use('/login', loginRoute);

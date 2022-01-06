@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import api from '../helper/api';
 import saveTokenAndRedirect from '../helper/saveTokenAndRedirect';
@@ -35,7 +35,6 @@ function Login() {
 
     try {
       const successStatus = 201;
-      console.log(loginBody);
       const { data: user, message, status } = await api.post('/login', loginBody);
 
       return status === successStatus
@@ -74,12 +73,13 @@ function Login() {
           LOGIN
         </button>
       </form>
-      <Link
-        to="/register"
+      <button
+        type="button"
+        onClick={ () => redirect('/register') }
         data-testid="common_login__button-register"
       >
         Ainda não tenho conta
-      </Link>
+      </button>
       { error !== ''
         ? <p data-testid="common_login__element-invalid-email">{error}</p>
         : null }
