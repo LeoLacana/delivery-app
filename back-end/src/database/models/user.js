@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       role: DataTypes.STRING
     },
     {
-      timestamps: false
+      timestamps: false,
+      tableName: 'users'
     }
   );
   return User;
