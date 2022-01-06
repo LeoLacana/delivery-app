@@ -13,6 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
-
+  console.log('Models ==>', sequelize.models);
   return User;
 };

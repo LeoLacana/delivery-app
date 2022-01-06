@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Sale.associate = ({ Sale, Product }) => {
-    Sale.belongsToMany(Product, {
+  SaleProduct.associate = ({ Sales, Products }) => {
+    Sales.belongsToMany(Products, {
       as: 'products',
       through: SaleProduct,
       foreignKey: 'sale_id',
       otherKey: 'product_id'
     });
-    Product.belongsToMany(Sale, {
+    Products.belongsToMany(Sales, {
       as: 'products',
       through: SaleProduct,
       foreignKey: 'sale_id',
