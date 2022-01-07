@@ -34,14 +34,15 @@ function Login() {
     const loginBody = { email, password };
 
     try {
-      const successStatus = 200;
-      const { data: user, message, status } = await api.post('/login', loginBody);
+      const { data: user } = await api.post('/login', loginBody);
 
-      return status === successStatus
-        ? saveTokenAndRedirect(redirect, user)
-        : setError(message);
+      return saveTokenAndRedirect(redirect, user);
     } catch (err) {
-      setError('Tente novamente mais tarde.');
+      if (err.message.includes('404')) {
+        setError('Email ou senha inválidos');
+      } else {
+        setError('Tente novamente mais tarde.');
+      }
     }
   };
 

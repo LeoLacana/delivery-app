@@ -1,7 +1,7 @@
 const saveTokenAndRedirect = (redirect, user) => {
   const { role } = user;
 
-  localStorage.setItem('user', JSON.stringify(user));
+  localStorage.setItem('user', JSON.stringify(user, null, 2));
 
   if (role === 'customer') {
     redirect(`/${role}/products`);
