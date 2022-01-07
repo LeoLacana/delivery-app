@@ -50,7 +50,7 @@ function Register() {
       const { message, status } = await api.post('/register', registerBody);
 
       return status === successStatus
-        ? redirect('/login')
+        ? redirect('/customer/products')
         : setError(message);
     } catch (err) {
       console.log(err.message);
