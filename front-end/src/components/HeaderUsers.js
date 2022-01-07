@@ -1,9 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function HeaderUsers() {
-  const localStorageUser = localStorage.getItem('user');
+  const redirect = useNavigate();
 
-  const user = JSON.parse(localStorageUser);
+  const localStorageUser = localStorage.getItem('user');
+  const { name } = JSON.parse(localStorageUser);
+
+  const userCheckout = () => {
+    localStorage.removeItem('user');
+    redirect('/');
+  };
 
   return (
     <header>
@@ -23,11 +30,12 @@ function HeaderUsers() {
         <p
           data-testid="customer_products__element-navbar-user-full-name"
         >
-          {user.name}
+          {name}
         </p>
         <button
           type="button"
           data-testid="customer_products__element-navbar-link-logout"
+          onClick={ () => userCheckout() }
         >
           Sair
         </button>
