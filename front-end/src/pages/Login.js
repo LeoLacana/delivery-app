@@ -34,7 +34,7 @@ function Login() {
     const loginBody = { email, password };
 
     try {
-      const successStatus = 201;
+      const successStatus = 200;
       const { data: user, message, status } = await api.post('/login', loginBody);
 
       return status === successStatus
