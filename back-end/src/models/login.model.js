@@ -1,11 +1,12 @@
-const { Users } = require('../database/models');
-const newToken = require('../auth/newToken.auth');
 const md5 = require('md5');
 // const bcrypt = require('bcrypt');
 
+const { Users } = require('../database/models');
+const newToken = require('../auth/newToken.auth');
+
 const login = async (email, password) => {
   const user = await Users.findOne({
-    where: { email }
+    where: { email },
   });
   if (!user) return null;
 
@@ -22,10 +23,10 @@ const login = async (email, password) => {
     name: user.name,
     email: user.email,
     role: user.role,
-    token
+    token,
   };
 };
 
 module.exports = {
-  login
+  login,
 };

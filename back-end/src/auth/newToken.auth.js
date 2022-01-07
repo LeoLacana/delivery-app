@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 const path = require('path');
+
 const secretKey = require('fs').readFileSync(
   path.join(__dirname, '../../jwt.evaluation.key'),
   {
-    encoding: 'utf8'
-  }
+    encoding: 'utf8',
+  },
 );
 
 const newToken = (email, role) => {
