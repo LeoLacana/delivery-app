@@ -6,13 +6,15 @@ const login = async (req, res) => {
     const user = await loginModel.login(email, password);
     if (!user) {
       return res.status(404).json({
-        message: 'Usuário não encontrado ou senha inválida'
+        message: 'Usuário não encontrado ou senha inválida',
       });
     }
     return res.status(200).json(user);
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno no servidor' });
+  }
 };
 
 module.exports = {
-  login
+  login,
 };
