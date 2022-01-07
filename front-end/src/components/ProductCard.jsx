@@ -29,11 +29,9 @@ function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity 
     }
 
     if (oldQuantity === 0) {
-      console.log('adiciona');
       return addToCart({ ...product, quantity: newQuantity });
     }
 
-    console.log('update');
     updateQuantity({ ...product, quantity: newQuantity });
   }
 
@@ -84,7 +82,6 @@ function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity 
 
 const mapStateToProps = (state) => ({
   cart: state.productsReducer.products,
-  state,
 });
 
 const mapDispatchToProps = (dispatch) => ({

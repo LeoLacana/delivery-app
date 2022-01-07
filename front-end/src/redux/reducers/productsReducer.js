@@ -11,7 +11,6 @@ const INITIAL_STATE = {
 function productsReducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
   case ADD_PRODUCT:
-    console.log('adiciona reducer');
     return {
       ...state,
       products: [...state.products, payload],
