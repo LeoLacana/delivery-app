@@ -8,7 +8,7 @@ import {
   updateQuantityAction,
 } from '../redux/actions';
 
-function ProductCard({ product, cart }) {
+function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity }) {
   const { id, name, price, url_image: urlImage } = product;
 
   const productIsInCart = cart.find((cartItem) => cartItem.id === id);
@@ -25,14 +25,16 @@ function ProductCard({ product, cart }) {
     setQuantity(newQuantity);
 
     if (newQuantity === 0) {
-      return removeProductAction(id);
+      return removeFromCart(id);
     }
 
     if (oldQuantity === 0) {
-      return addProductAction({ ...product, quantity: newQuantity });
+      console.log('adiciona');
+      return addToCart({ ...product, quantity: newQuantity });
     }
 
-    updateQuantityAction({ ...product, quantity: newQuantity });
+    console.log('update');
+    updateQuantity({ ...product, quantity: newQuantity });
   }
 
   return (
@@ -40,11 +42,12 @@ function ProductCard({ product, cart }) {
       <p
         data-testid={ `customer_products__element-card-price-${id}` }
       >
-        {price.toFixed(2).toString().replace('.', ',')}
+        {Number(price).toFixed(2).toString().replace('.', ',')}
       </p>
       <img
         src={ urlImage }
         alt={ name }
+        style={ { height: '100px' } }
         data-testid={ `customer_products__img-card-bg-image-${id}` }
       />
       <p
@@ -55,10 +58,10 @@ function ProductCard({ product, cart }) {
       <div>
         <button
           type="button"
-          data-testid={ `customer_products__button-card-add-item-${id}` }
-          onClick={ () => handleQuantityButton(quantity + 1) }
+          data-testid={ `customer_products__button-card-rm-item-${id}` }
+          onClick={ () => handleQuantityButton(quantity - 1) }
         >
-          +
+          -
         </button>
         <input
           type="number"
@@ -69,10 +72,10 @@ function ProductCard({ product, cart }) {
         />
         <button
           type="button"
-          data-testid={ `customer_products__button-card-rm-item-${id}` }
-          onClick={ () => handleQuantityButton(quantity - 1) }
+          data-testid={ `customer_products__button-card-add-item-${id}` }
+          onClick={ () => handleQuantityButton(quantity + 1) }
         >
-          -
+          +
         </button>
       </div>
     </div>
@@ -81,12 +84,13 @@ function ProductCard({ product, cart }) {
 
 const mapStateToProps = (state) => ({
   cart: state.productsReducer.products,
+  state,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addToCart: (payload) => dispatch(addProductAction(payload)),
   removeFromCart: (payload) => dispatch(removeProductAction(payload)),
-  updateQuantityAction: (payload) => dispatch(updateQuantityAction(payload)),
+  updateQuantity: (payload) => dispatch(updateQuantityAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductCard);
@@ -95,11 +99,11 @@ ProductCard.propTypes = {
   product: {
     id: PropTypes.number,
     name: PropTypes.string,
-    price: PropTypes.number,
+    price: PropTypes.string,
     url_image: PropTypes.string,
   }.isRequired,
   cart: PropTypes.arrayOf(PropTypes.object),
   addToCart: PropTypes.func,
   removeFromCart: PropTypes.func,
-  updateQuantityAction: PropTypes.func,
+  updateQuantity: PropTypes.func,
 }.isRequired;

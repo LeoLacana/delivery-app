@@ -3,24 +3,19 @@ import React, { useEffect, useState } from 'react';
 import api from '../helper/api';
 
 import ProductCard from './ProductCard';
+import SeeCartButton from './SeeCartButton';
 
-import mockProducts from '../mock/products';
+const fetchApi = async (route, setState) => {
+  const { data } = await api.get(route);
 
-const fetchApi = async (route, setState, valid = false) => {
-  if (valid) {
-    const { data } = await api.get(route);
-
-    setState(data);
-  }
-
-  setState(mockProducts);
+  setState(data);
 };
 
 function ProductsBoard() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetchApi('/products', setProducts);
+    fetchApi('/customer/products', setProducts);
   }, []);
 
   return (
@@ -30,6 +25,7 @@ function ProductsBoard() {
           <ProductCard key={ index } product={ product } />
         ))
       }
+      <SeeCartButton />
     </div>
   );
 }
