@@ -11,7 +11,6 @@ const create = async (name, email, password) => {
     }
   });
   if (checkUser) return null;
-
   const hashPassword = md5(password);
 
   await Users.create({

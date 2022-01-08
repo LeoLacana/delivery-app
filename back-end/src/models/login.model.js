@@ -1,6 +1,4 @@
 const md5 = require('md5');
-// const bcrypt = require('bcrypt');
-
 const { Users } = require('../database/models');
 const newToken = require('../auth/newToken.auth');
 
