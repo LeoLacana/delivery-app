@@ -14,6 +14,18 @@ const listProducts = async (req, res) => {
   }
 };
 
+const createSale = async (req, res) => {
+  try {
+    const saleId = await customerModel.createSale(req.body);
+    return res.status(200).json({
+      saleId
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno no servidor' });
+  }
+};
+
 module.exports = {
-  listProducts
+  listProducts,
+  createSale
 };
