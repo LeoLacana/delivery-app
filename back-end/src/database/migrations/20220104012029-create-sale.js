@@ -56,13 +56,13 @@ module.exports = {
       },
       status: {
         allowNull: false,
-        defaultValue: 'Pendente',
+        defaultValue: 'PENDENTE',
         type: Sequelize.STRING
-      },
-      role: {
-        allowNull: false,
-        type: Sequelize.ENUM('administrator', 'seller', 'customer')
       }
+      // role: {
+      //   allowNull: false,
+      //   type: Sequelize.ENUM('administrator', 'seller', 'customer')
+      // }
     });
   },
   down: async (queryInterface, _Sequelize) => {
