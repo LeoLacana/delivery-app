@@ -18,14 +18,14 @@ module.exports = (sequelize, DataTypes) => {
       delivery_number: DataTypes.NUMBER,
       sale_date: {
         type: DataTypes.DATE,
-        notnull: true,
-        defaultvalue: Date.NOW
+        notNull: true,
+        defaultValue: DataTypes.NOW
       },
       status: {
         type: DataTypes.STRING,
-        defaultvalue: 'Pendente'
-      },
-      role: DataTypes.STRING
+        defaultvalue: 'PENDENTE'
+      }
+      // role: DataTypes.STRING
     },
     {
       timestamps: false,
