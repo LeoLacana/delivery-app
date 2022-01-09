@@ -13,7 +13,7 @@ function App() {
     <Provider store={ store }>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={ <Navigate to="/login" /> } />
+          <Route path="/" element={ <Navigate to="/login" /> } />
           <Route path="/login" element={ <Login /> } />
           <Route path="/register" element={ <Register /> } />
           <Route path="/customer/products" element={ <Products /> } />
