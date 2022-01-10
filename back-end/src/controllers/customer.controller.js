@@ -5,7 +5,7 @@ const listProducts = async (req, res) => {
     const products = await customerModel.listProducts();
     if (!products) {
       return res.status(409).json({
-        message: 'Produtos não encontrados'
+        message: 'Produtos não encontrados',
       });
     }
     return res.status(201).json(products);

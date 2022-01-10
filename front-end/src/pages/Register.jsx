@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
-import api from '../helper/api';
+import loginAndRedirect from '../helper/loginAndRedirect';
+import registerUser from '../helper/registerUser';
 import { validateEmail, validatePassword, validateName } from '../helper/validations';
 
 function Register() {
@@ -45,17 +46,12 @@ function Register() {
       password,
     };
 
-    try {
-      const successStatus = 201;
-      const { message, status } = await api.post('/register', registerBody);
+    const { err } = await registerUser(registerBody);
+    if (err) return setError(err);
 
-      return status === successStatus
-        ? redirect('/customer/products')
-        : setError(message);
-    } catch (err) {
-      console.log(err.message);
-      setError('Tente novamente mais tarde.');
-    }
+    const response = await loginAndRedirect({ email, password }, redirect);
+
+    if (response.err) setError(response.err);
   };
 
   return (

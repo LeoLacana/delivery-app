@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import api from '../helper/api';
-import saveTokenAndRedirect from '../helper/saveTokenAndRedirect';
+import loginAndRedirect from '../helper/loginAndRedirect';
 import { validateEmail, validatePassword } from '../helper/validations';
 
 function Login() {
@@ -31,17 +30,12 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const loginBody = { email, password };
-
     try {
-      const successStatus = 200;
-      const { data: user, message, status } = await api.post('/login', loginBody);
+      const response = await loginAndRedirect({ email, password }, redirect);
 
-      return status === successStatus
-        ? saveTokenAndRedirect(redirect, user)
-        : setError(message);
+      if (response.err) setError(response.err);
     } catch (err) {
-      setError('Tente novamente mais tarde.');
+      setError(err.message);
     }
   };
 

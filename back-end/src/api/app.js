@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(
   '/images',
-  express.static(path.join(__dirname, '..', '..', 'public', 'images'))
+  express.static(path.join(__dirname, '..', '..', 'public', 'images')),
 );
 
 app.use('/register', registerRoute);
