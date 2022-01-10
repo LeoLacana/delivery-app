@@ -7,26 +7,21 @@ const { Users } = require('../database/models');
 const create = async (name, email, password) => {
   const checkUser = await Users.findOne({
     where: {
-      [Op.or]: [{ name }, { email }],
-    },
+      [Op.or]: [{ name }, { email }]
+    }
   });
   if (checkUser) return null;
-
-  // O certo
-  // const hashPassword = await bcrypt.hash(password, 12);
-
-  // O que passa no avaliador
   const hashPassword = md5(password);
 
   await Users.create({
     name,
     email,
     password: hashPassword,
-    role: 'customer',
+    role: 'customer'
   });
   return true;
 };
 
 module.exports = {
-  create,
+  create
 };
