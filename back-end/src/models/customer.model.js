@@ -1,4 +1,5 @@
-const { Products, Sales, SalesProducts } = require('../database/models');
+const moment = require('moment');
+const { Products, Sales, SalesProducts, Users } = require('../database/models');
 
 const listProducts = async () => {
   const products = await Products.findAll();
@@ -19,7 +20,33 @@ const createSale = async (sale) => {
   return saleId.dataValues.id;
 };
 
+const getOrderById = async (id) => {
+  const order = await Sales.findOne({
+    where: { id },
+    include: [
+      {
+        model: Users,
+        as: 'seller',
+        attributes: ['name']
+      },
+      {
+        model: Products,
+        as: 'products',
+        attributes: { exclude: ['url_image'] },
+        through: { attributes: ['quantity'] }
+      }
+    ]
+  });
+  const timestamp = order.dataValues.sale_date;
+  if (!order) return null;
+  return {
+    ...order.dataValues,
+    sale_date: moment(timestamp).format('DD/MM/YYYY')
+  };
+};
+
 module.exports = {
   listProducts,
-  createSale
+  createSale,
+  getOrderById
 };
