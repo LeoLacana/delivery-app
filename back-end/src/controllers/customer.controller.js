@@ -28,9 +28,9 @@ const createSale = async (req, res) => {
 
 
 const listOrders = async (req, res) => {
+  const token = req.headers.authorization;
+  const { id } = await verifyToken(token);
   try {
-    const token = req.headers.authorization;
-    const { id } = await verifyToken(token);
     const orders = await customerModel.listOrders(id);
     if (!orders) {
       return res.status(409).json({

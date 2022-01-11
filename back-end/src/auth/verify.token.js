@@ -6,7 +6,7 @@ const secretKey = require('fs').readFileSync(
   {
     encoding: 'utf8'
   }
-);
+).trim();
 
 const verifyToken = (token) => {
   const decoded = jwt.verify(token, secretKey);

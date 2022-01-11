@@ -21,7 +21,7 @@ const createSale = async (sale) => {
 
 const listOrders = async (id) => {
   const orders = await Sales.findAll({
-    where: { id }
+    where: { user_id: id }
   });
   if (!orders) return null;
   return orders;
