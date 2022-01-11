@@ -20,11 +20,13 @@ function HeaderUsers() {
         >
           PRODUTOS
         </p>
-        <p
+        <button
+          type="button"
           data-testid="customer_products__element-navbar-link-orders"
+          onClick={ () => redirect('/customer/orders') }
         >
           MEUS PEDIDOS
-        </p>
+        </button>
       </div>
       <div>
         <p
