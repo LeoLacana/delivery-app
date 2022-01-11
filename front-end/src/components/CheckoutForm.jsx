@@ -18,9 +18,8 @@ function CheckoutForm({ cart }) {
   const [allSellers, setAllSellers] = useState([]);
 
   useEffect(() => {
-    if (!localStorage.getItem('user')) return redirect('/');
     fetchApi('/seller/names', setAllSellers);
-  }, [redirect]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +27,8 @@ function CheckoutForm({ cart }) {
     const totalPrice = cart.reduce(
       (acc, { price, quantity }) => acc + (price * quantity), 0,
     );
+
+    if (!localStorage.getItem('user')) return;
 
     const { token } = JSON.parse(localStorage.getItem('user'));
 
