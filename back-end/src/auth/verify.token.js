@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
 const path = require('path');
 
-const secretKey = require('fs').readFileSync(
-  path.join(__dirname, '../../jwt.evaluation.key'),
-  {
+const secretKey = require('fs')
+  .readFileSync(path.join(__dirname, '../../jwt.evaluation.key'), {
     encoding: 'utf8'
   }
 ).trim();

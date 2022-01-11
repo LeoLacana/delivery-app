@@ -3,13 +3,17 @@ const customerCtrl = require('../controllers/customer.controller');
 
 const router = express.Router();
 
-// /products
+// customer/products
 router.route('/products').get(customerCtrl.listProducts);
 
-// /checkout
+// customer/checkout
 router.route('/checkout').post(customerCtrl.createSale);
 
 // /orders
 router.route('/orders').get(customerCtrl.listOrders);
+
+// customer/order/:id
+router.route('/orders/:id').get(customerCtrl.getOrderById);
+
 
 module.exports = router;
