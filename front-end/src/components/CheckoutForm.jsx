@@ -39,7 +39,7 @@ function CheckoutForm({ cart }) {
         delivery_address: address,
         delivery_number: number,
         products: cart,
-      }, { authorization: token });
+      }, { headers: { Authorization: token } });
 
       redirect(`/customer/order/${response.data.saleId}`);
     } catch (err) {
