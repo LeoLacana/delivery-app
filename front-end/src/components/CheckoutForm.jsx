@@ -10,30 +10,40 @@ const fetchApi = async (route, setState) => {
 };
 
 function CheckoutForm({ cart }) {
+  const redirect = useNavigate();
+
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState(0);
   const [seller, setSeller] = useState('');
   const [allSellers, setAllSellers] = useState([]);
-  const redirect = useNavigate();
 
   useEffect(() => {
-    fetchApi('/sellers', setAllSellers);
-  }, []);
+    if (!localStorage.getItem('user')) return redirect('/');
+    fetchApi('/seller/names', setAllSellers);
+  }, [redirect]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const totalPrice = cart.reduce(
       (acc, { price, quantity }) => acc + (price * quantity), 0,
     );
-    const response = await api.post('/customer/checkout', {
-      sellerId: seller,
-      totalPrice,
-      delivery_address: address,
-      delivery_number: number,
-      products: cart,
-    });
-    if (response.message) return alert(response.message);
-    redirect(`/customer/order/${response.data.saleId}`);
+
+    const { token } = JSON.parse(localStorage.getItem('user'));
+
+    try {
+      const response = await api.post('/customer/checkout', {
+        seller_id: seller,
+        total_price: totalPrice,
+        delivery_address: address,
+        delivery_number: number,
+        products: cart,
+      }, { authorization: token });
+
+      redirect(`/customer/order/${response.data.saleId}`);
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
