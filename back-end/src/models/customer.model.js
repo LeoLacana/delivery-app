@@ -19,7 +19,16 @@ const createSale = async (sale) => {
   return saleId.dataValues.id;
 };
 
+const listOrders = async (id) => {
+  const orders = await Sales.findAll({
+    where: { id }
+  });
+  if (!orders) return null;
+  return orders;
+};
+
 module.exports = {
   listProducts,
-  createSale
+  createSale,
+  listOrders,
 };

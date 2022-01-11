@@ -1,4 +1,5 @@
 const customerModel = require('../models/customer.model');
+const { verifyToken } = require('../auth/verify.token');
 
 const listProducts = async (req, res) => {
   try {
@@ -25,7 +26,26 @@ const createSale = async (req, res) => {
   }
 };
 
+
+const listOrders = async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+    const { id } = await verifyToken(token);
+    const orders = await customerModel.listOrders(id);
+    if (!orders) {
+      return res.status(409).json({
+        message: 'Pedidos não encontrados',
+      });
+    }
+    return res.status(201).json(orders);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno no servidor' });
+  }
+};
+
+
 module.exports = {
   listProducts,
-  createSale
+  createSale,
+  listOrders,
 };
