@@ -1,13 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function OrderCard({ sales }) {
+  const redirect = useNavigate();
+
   return (
     <div>
       {
         sales.map((sale) => (
-          <div
+          <button
+            type="button"
             key={ sale.id }
+            onClick={ () => redirect(`/customer/orders/${sale.id}`) }
           >
             <p>
               pedido:
@@ -30,7 +35,7 @@ function OrderCard({ sales }) {
 
             </p>
             <p>{sale.total_price}</p>
-          </div>
+          </button>
         ))
       }
 
