@@ -20,7 +20,7 @@ app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/customer', customerRoute);
 app.use('/seller/names', sellerNamesRoute);
-//app.use('/seller/orders', sellerNamesRoute);
+// app.use('/seller/orders', sellerNamesRoute);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 

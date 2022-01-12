@@ -15,5 +15,4 @@ router.route('/orders').get(customerCtrl.listOrders);
 // customer/order/:id
 router.route('/orders/:id').get(customerCtrl.getOrderById);
 
-
 module.exports = router;

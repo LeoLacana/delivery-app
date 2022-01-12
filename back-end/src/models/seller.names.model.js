@@ -5,7 +5,7 @@ const sellerNamesModel = async () => {
     where: {
       role: 'seller',
     },
-    attributes: { exclude: ['password', 'email', 'role'] }
+    attributes: { exclude: ['password', 'email', 'role'] },
   });
   return sellers;
 };
