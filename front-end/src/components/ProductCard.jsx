@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import {
   addProductAction,
   removeProductAction,
   updateQuantityAction,
 } from '../redux/actions';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import CardButtons from './CardButtons';
 
 function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity }) {
   const { id, name, price, url_image: urlImage } = product;
@@ -36,47 +40,95 @@ function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity 
   }
 
   return (
-    <div key={ id }>
-      <p
-        data-testid={ `customer_products__element-card-price-${id}` }
-      >
-        {Number(price).toFixed(2).toString().replace('.', ',')}
-      </p>
-      <img
-        src={ urlImage }
-        alt={ name }
-        style={ { height: '100px' } }
-        data-testid={ `customer_products__img-card-bg-image-${id}` }
-      />
-      <p
-        data-testid={ `customer_products__element-card-title-${id}` }
-      >
-        {name}
-      </p>
-      <div>
-        <button
-          type="button"
-          data-testid={ `customer_products__button-card-rm-item-${id}` }
-          onClick={ () => handleQuantityButton(quantity - 1) }
-        >
-          -
-        </button>
-        <input
-          type="number"
-          data-testid={ `customer_products__input-card-quantity-${id}` }
-          value={ quantity }
-          min="0"
-          onChange={ (e) => handleQuantityButton(e.target.value) }
+    <>
+      <Card key={ id } style={ { width: '18rem' } }>
+        <Card.Img
+          src={ urlImage }
+          alt={ name }
+          variant="top"
+          style={ {
+            width: 'auto',
+            height: 'auto',
+            maxHeight: '280px',
+          } }
+          data-testid={ `customer_products__img-card-bg-image-${id}` }
         />
-        <button
-          type="button"
-          data-testid={ `customer_products__button-card-add-item-${id}` }
-          onClick={ () => handleQuantityButton(quantity + 1) }
+        <Card.Body>
+          <Card.Title
+            data-testid={ `customer_products__element-card-title-${id}` }
+          >
+            {name}
+
+          </Card.Title>
+          <Card.Text>
+            {/* <img
+              src={ urlImage }
+              alt={ name }
+              style={ { height: '100px' } }
+              data-testid={ `customer_products__img-card-bg-image-${id}` }
+            /> */}
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem>
+            R$
+            <span
+              data-testid={ `customer_products__element-card-price-${id}` }
+            >
+              {Number(price).toFixed(2).toString().replace('.', ',')}
+            </span>
+          </ListGroupItem>
+          <ListGroupItem>
+            <CardButtons
+              id={ id }
+              quantity={ quantity }
+              handleQuantityButton={ handleQuantityButton }
+            />
+          </ListGroupItem>
+        </ListGroup>
+      </Card>
+      {/* <div key={ id }>
+        <p
+          data-testid={ `customer_products__element-card-price-${id}` }
         >
-          +
-        </button>
-      </div>
-    </div>
+          {Number(price).toFixed(2).toString().replace('.', ',')}
+        </p>
+        <img
+          src={ urlImage }
+          alt={ name }
+          style={ { height: '100px' } }
+          data-testid={ `customer_products__img-card-bg-image-${id}` }
+        />
+        <p
+          data-testid={ `customer_products__element-card-title-${id}` }
+        >
+          {name}
+        </p>
+        <div>
+          <button
+            type="button"
+            data-testid={ `customer_products__button-card-rm-item-${id}` }
+            onClick={ () => handleQuantityButton(quantity - 1) }
+          >
+            -
+          </button>
+          <input
+            type="number"
+            data-testid={ `customer_products__input-card-quantity-${id}` }
+            value={ quantity }
+            min="0"
+            onChange={ (e) => handleQuantityButton(e.target.value) }
+          />
+          <button
+            type="button"
+            data-testid={ `customer_products__button-card-add-item-${id}` }
+            onClick={ () => handleQuantityButton(quantity + 1) }
+          >
+            +
+          </button>
+        </div>
+      </div> */}
+    </>
   );
 }
 

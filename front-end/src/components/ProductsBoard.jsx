@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
+import { Row, Col } from 'react-bootstrap';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import api from '../helper/api';
 
 import ProductCard from './ProductCard';
@@ -19,14 +23,27 @@ function ProductsBoard() {
   }, []);
 
   return (
-    <div>
-      {
-        products.map((product, index) => (
-          <ProductCard key={ index } product={ product } />
-        ))
-      }
+    <>
+      <div
+        style={
+          {
+            marginTop: '20px',
+            marginBottom: '45px' }
+        }
+        className="justify-content-center "
+      >
+        <Row xs="auto" md="auto" className="justify-content-center g-3">
+          {
+            products.map((product, index) => (
+              <Col md="auto" key={ index }>
+                <ProductCard product={ product } />
+              </Col>
+            ))
+          }
+        </Row>
+      </div>
       <SeeCartButton />
-    </div>
+    </>
   );
 }
 
