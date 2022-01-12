@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(9, 2),
         field: 'total_price',
       },
-      delivery_address: {
+      deliveryAddress: {
         type: DataTypes.STRING,
         field: 'delivery_address',
       },
-      delivery_number: {
+      deliveryNumber: {
         type: DataTypes.NUMBER,
         field: 'delivery_number',
       },
