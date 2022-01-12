@@ -13,7 +13,7 @@ const sellerNamesModel = async () => {
 const sellerOrdersModel = async (id) => {
   const orders = await Sales.findAll({
     where: {
-      seller_id: id,
+      sellerId: id,
     },
     attributes: { exclude: ['user_id', 'seller_id'] },
   });

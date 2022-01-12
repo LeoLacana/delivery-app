@@ -20,12 +20,11 @@ const listProducts = async (_req, res) => {
 
 const createSale = async (req, res) => {
   const token = req.headers.authorization;
-  let payload;
   try {
-    payload = verifyToken(token);
+    const { id } = verifyToken(token);
     const saleId = await customerModel.createSale({
       ...req.body,
-      user_id: payload.id,
+      userId: id,
     });
     return res.status(201).json({
       saleId,

@@ -10,10 +10,10 @@ const listProducts = async () => {
 const createSale = async (sale) => {
   const { products } = sale;
   const saleId = await Sales.create(sale);
-  products.forEach(({ product_id, quantity }) =>
+  products.forEach(({ productId, quantity }) =>
     SalesProducts.create({
-      product_id,
-      sale_id: saleId.dataValues.id,
+      productId,
+      saleId: saleId.dataValues.id,
       quantity,
     }));
   return saleId.dataValues.id;
@@ -21,7 +21,7 @@ const createSale = async (sale) => {
 
 const listOrders = async (id) => {
   const orders = await Sales.findAll({
-    where: { user_id: id },
+    where: { userId: id },
     attributes: { exclude: ['delivery_number', 'delivery_address', 'seller_id', 'user_id'] },
   });
   if (!orders) return null;
@@ -45,7 +45,7 @@ const getOrderById = async (id) => {
   if (!order) return null;
   return {
     ...order.dataValues,
-    sale_date: moment(timestamp).format('DD/MM/YYYY'),
+    saleDate: moment(timestamp).format('DD/MM/YYYY'),
   };
 };
 
