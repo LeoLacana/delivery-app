@@ -49,33 +49,34 @@ function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity 
           style={ {
             width: 'auto',
             height: 'auto',
-            maxHeight: '280px',
+            maxHeight: '250px',
+            objectFit: 'contain',
           } }
           data-testid={ `customer_products__img-card-bg-image-${id}` }
         />
         <Card.Body>
           <Card.Title
             data-testid={ `customer_products__element-card-title-${id}` }
+            style={ {
+              height: '35px',
+              textAlign: 'center',
+            } }
           >
             {name}
 
           </Card.Title>
-          <Card.Text>
-            {/* <img
-              src={ urlImage }
-              alt={ name }
-              style={ { height: '100px' } }
-              data-testid={ `customer_products__img-card-bg-image-${id}` }
-            /> */}
-          </Card.Text>
         </Card.Body>
         <ListGroup className="list-group-flush">
-          <ListGroupItem>
+          <ListGroupItem
+            style={ {
+              textAlign: 'center',
+            } }
+          >
             R$
             <span
               data-testid={ `customer_products__element-card-price-${id}` }
             >
-              {Number(price).toFixed(2).toString().replace('.', ',')}
+              {` ${Number(price).toFixed(2).toString().replace('.', ',')}`}
             </span>
           </ListGroupItem>
           <ListGroupItem>

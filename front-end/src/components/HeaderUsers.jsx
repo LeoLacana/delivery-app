@@ -17,7 +17,12 @@ function HeaderUsers() {
   return (
     <header>
       <Navbar bg="primary" variant="dark">
-        <Container>
+        <Container
+          style={ {
+            width: '90%',
+            margin: '0 auto',
+          } }
+        >
           <Navbar.Brand
             data-testid="customer_products__element-navbar-user-full-name"
           >
@@ -25,9 +30,14 @@ function HeaderUsers() {
           </Navbar.Brand>
           <Nav
             className="me-auto"
+            style={ {
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'space-evenly',
+            } }
           >
             <Nav.Link
-              data-testid="customer_products__element-navbar-link-logout"
+              data-testid="customer_products__element-navbar-link-orders"
               onClick={ () => redirect('/customer/orders') }
             >
               MEUS PEDIDOS

@@ -25,11 +25,11 @@ function ProductsBoard() {
   return (
     <>
       <div
-        style={
-          {
-            marginTop: '20px',
-            marginBottom: '45px' }
-        }
+        style={ {
+          marginTop: '20px',
+          marginBottom: '45px',
+          width: '100vw',
+        } }
         className="justify-content-center "
       >
         <Row xs="auto" md="auto" className="justify-content-center g-3">

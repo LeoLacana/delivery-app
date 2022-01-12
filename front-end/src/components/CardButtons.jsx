@@ -12,7 +12,6 @@ const inputStyle = {
 };
 
 const buttonStyle = {
-  /* vertical | horizontal */
   margin: '0 7px',
 };
 
@@ -20,13 +19,13 @@ function CardButtons({ handleQuantityButton, id, quantity }) {
   return (
     <div style={ buttonCardStyle }>
       <Button
-        variant="success"
+        variant="danger"
         style={ buttonStyle }
         type="button"
-        data-testid={ `customer_products__button-card-add-item-${id}` }
-        onClick={ () => handleQuantityButton(quantity + 1) }
+        data-testid={ `customer_products__button-card-rm-item-${id}` }
+        onClick={ () => handleQuantityButton(quantity - 1) }
       >
-        +
+        -
       </Button>
       <input
         style={ inputStyle }
@@ -37,13 +36,13 @@ function CardButtons({ handleQuantityButton, id, quantity }) {
         onChange={ (e) => handleQuantityButton(e.target.value) }
       />
       <Button
-        variant="danger"
+        variant="success"
         style={ buttonStyle }
         type="button"
-        data-testid={ `customer_products__button-card-rm-item-${id}` }
-        onClick={ () => handleQuantityButton(quantity - 1) }
+        data-testid={ `customer_products__button-card-add-item-${id}` }
+        onClick={ () => handleQuantityButton(quantity + 1) }
       >
-        -
+        +
       </Button>
     </div>
   );
