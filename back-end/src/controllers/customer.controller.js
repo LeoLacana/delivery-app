@@ -2,7 +2,7 @@ const customerModel = require('../models/customer.model');
 
 const verifyToken = require('../auth/verify.token');
 
-const errorMessage = 'Erro interno no servidor',
+const errorMessage = 'Erro interno no servidor';
 
 const listProducts = async (_req, res) => {
   try {
