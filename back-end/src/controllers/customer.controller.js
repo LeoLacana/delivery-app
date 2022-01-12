@@ -27,7 +27,7 @@ const createSale = async (req, res) => {
       ...req.body,
       user_id: payload.id,
     });
-    return res.status(200).json({
+    return res.status(201).json({
       saleId,
     });
   } catch (error) {
