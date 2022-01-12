@@ -4,7 +4,7 @@ const verifyToken = require('../auth/verify.token');
 
 const errorMessage = 'Erro interno no servidor',
 
-const listProducts = async (req, res) => {
+const listProducts = async (_req, res) => {
   try {
     const products = await customerModel.listProducts();
     if (!products) {

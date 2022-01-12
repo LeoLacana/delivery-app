@@ -15,8 +15,7 @@ const createSale = async (sale) => {
       product_id,
       sale_id: saleId.dataValues.id,
       quantity,
-    }),
-  );
+    }));
   return saleId.dataValues.id;
 };
 
