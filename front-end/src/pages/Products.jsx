@@ -10,10 +10,10 @@ function Products() {
   }
 
   return (
-    <div>
+    <>
       <HeaderUsers />
       <ProductsBoard />
-    </div>
+    </>
   );
 }
 

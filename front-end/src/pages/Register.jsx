@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import loginAndRedirect from '../helper/loginAndRedirect';
-import registerUser from '../helper/registerUser';
+import loginAndRedirect from '../helper/api/loginAndRedirect';
+import registerUser from '../helper/api/registerUser';
 import { validateEmail, validatePassword, validateName } from '../helper/validations';
 
 function Register() {
@@ -46,8 +46,8 @@ function Register() {
       password,
     };
 
-    const { err } = await registerUser(registerBody);
-    if (err) return setError(err);
+    const res = await registerUser(registerBody);
+    if (res.err) return setError(res.err);
 
     const response = await loginAndRedirect({ email, password }, redirect);
 

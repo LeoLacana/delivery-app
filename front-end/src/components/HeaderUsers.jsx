@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function HeaderUsers() {
   const redirect = useNavigate();
@@ -14,32 +16,50 @@ function HeaderUsers() {
 
   return (
     <header>
-      <div>
-        <p
-          data-testid="customer_products__element-navbar-link-products"
+      <Navbar bg="primary" variant="dark">
+        <Container
+          style={ {
+            width: '90%',
+            margin: '0 auto',
+          } }
         >
-          PRODUTOS
-        </p>
-        <p
-          data-testid="customer_products__element-navbar-link-orders"
-        >
-          MEUS PEDIDOS
-        </p>
-      </div>
-      <div>
-        <p
-          data-testid="customer_products__element-navbar-user-full-name"
-        >
-          {name}
-        </p>
-        <button
-          type="button"
-          data-testid="customer_products__element-navbar-link-logout"
-          onClick={ () => userCheckout() }
-        >
-          Sair
-        </button>
-      </div>
+          <Navbar.Brand
+            data-testid="customer_products__element-navbar-user-full-name"
+          >
+            { name }
+          </Navbar.Brand>
+          <Nav
+            className="me-auto"
+            style={ {
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'space-evenly',
+            } }
+          >
+            <Nav.Link
+              data-testid="customer_products__element-navbar-link-orders"
+              onClick={ () => redirect('/customer/orders') }
+            >
+              MEUS PEDIDOS
+            </Nav.Link>
+            <Nav.Link
+              data-testid="customer_products__element-navbar-link-products"
+              onClick={ () => redirect('/customer/products') }
+            >
+              PRODUTOS
+
+            </Nav.Link>
+            <Nav.Link
+              href="#pricing"
+              data-testid="customer_products__element-navbar-link-logout"
+              onClick={ () => userCheckout() }
+            >
+              SAIR
+
+            </Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
     </header>
   );
 }

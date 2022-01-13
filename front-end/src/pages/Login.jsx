@@ -1,8 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import loginAndRedirect from '../helper/loginAndRedirect';
+import { Form, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import loginAndRedirect from '../helper/api/loginAndRedirect';
 import { validateEmail, validatePassword } from '../helper/validations';
+import '../helper/css/Login.css';
+
+const redirectAlreadyLogged = (redirect) => {
+  const userStorage = localStorage.getItem('user');
+
+  if (!userStorage) return;
+
+  const user = JSON.parse(userStorage);
+
+  return user.role === 'customer'
+    ? redirect('/customer/products')
+    : redirect('/seller/orders');
+};
 
 function Login() {
   const redirect = useNavigate();
@@ -27,6 +41,8 @@ function Login() {
 
   useEffect(validateData, [email, password]);
 
+  useEffect(() => redirectAlreadyLogged(redirect), [redirect]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,8 +56,55 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="loginContainer">
+      <Form className="box" onSubmit={ handleSubmit }>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>EMAIL</Form.Label>
+          <Form.Control
+            type="email"
+            value={ email }
+            onChange={ (e) => setEmail(e.target.value) }
+            placeholder="Insira seu email"
+            data-testid="common_login__input-email"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>SENHA</Form.Label>
+          <Form.Control
+            type="password"
+            value={ password }
+            onChange={ (e) => setPassword(e.target.value) }
+            placeholder="Insira sua senha"
+            data-testid="common_login__input-password"
+          />
+        </Form.Group>
+        <Form.Text className="text-muted">
+          { error !== ''
+            ? <p data-testid="common_login__element-invalid-email">{error}</p>
+            : null }
+        </Form.Text>
+        <div className="d-grid gap-2">
+          <Button
+            className="loginButtons"
+            type="submit"
+            data-testid="common_login__button-login"
+            disabled={ isInvalid }
+            variant="success"
+          >
+            Login
+          </Button>
+          <Button
+            className="loginButtons"
+            type="button"
+            onClick={ () => redirect('/register') }
+            data-testid="common_login__button-register"
+          >
+            Ainda não tenho conta
+          </Button>
+        </div>
+      </Form>
+      {/* <h1>Login</h1>
       <form onSubmit={ handleSubmit }>
         <p>Login</p>
         <input
@@ -77,6 +140,7 @@ function Login() {
       { error !== ''
         ? <p data-testid="common_login__element-invalid-email">{error}</p>
         : null }
+    </div> */}
     </div>
   );
 }

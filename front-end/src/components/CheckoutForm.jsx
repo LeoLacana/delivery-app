@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import api from '../helper/api';
-
-const fetchApi = async (route, setState) => {
-  const { data } = await api.get(route);
-
-  setState(data);
-};
+import { getApi, postApiWithToken } from '../helper/api';
 
 function CheckoutForm({ cart }) {
   const redirect = useNavigate();
@@ -18,7 +12,7 @@ function CheckoutForm({ cart }) {
   const [allSellers, setAllSellers] = useState([]);
 
   useEffect(() => {
-    fetchApi('/seller/names', setAllSellers);
+    getApi('/seller/names', setAllSellers);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -35,7 +29,7 @@ function CheckoutForm({ cart }) {
     const { token } = JSON.parse(localStorage.getItem('user'));
 
     try {
-      const response = await api.post('/customer/checkout', {
+      const response = await postApiWithToken('/customer/checkout', {
         sellerId: seller,
         totalPrice,
         deliveryAddress: address,
@@ -43,7 +37,7 @@ function CheckoutForm({ cart }) {
         products,
       }, { headers: { Authorization: token } });
 
-      redirect(`/customer/orders/${response.data.saleId}`);
+      redirect(`/customer/orders/${response.saleId}`);
     } catch (err) {
       alert(err.message);
     }
