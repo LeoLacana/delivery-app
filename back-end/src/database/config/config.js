@@ -22,7 +22,6 @@ const options = {
   dialectOptions: {
     timezone: 'Z'
   },
-  timezone: '-03:00',
   logging: false
 };
 
