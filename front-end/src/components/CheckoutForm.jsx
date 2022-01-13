@@ -28,6 +28,8 @@ function CheckoutForm({ cart }) {
       (acc, { price, quantity }) => acc + (price * quantity), 0,
     );
 
+    const products = cart.map(({ id, quantity }) => ({ productId: id, quantity }));
+
     if (!localStorage.getItem('user')) return;
 
     const { token } = JSON.parse(localStorage.getItem('user'));
@@ -38,7 +40,7 @@ function CheckoutForm({ cart }) {
         totalPrice,
         deliveryAddress: address,
         deliveryNumber: Number(number),
-        products: cart,
+        products,
       }, { headers: { Authorization: token } });
 
       redirect(`/customer/orders/${response.data.saleId}`);
