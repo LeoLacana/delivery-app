@@ -22,7 +22,7 @@ const createSale = async (sale) => {
 const listOrders = async (id) => {
   const orders = await Sales.findAll({
     where: { userId: id },
-    attributes: { exclude: ['delivery_number', 'delivery_address', 'seller_id', 'user_id'] },
+    attributes: { exclude: ['deliveryNumber', 'deliveryAddress', 'sellerId', 'userId'] },
   });
   if (!orders) return null;
   return orders;
@@ -36,7 +36,7 @@ const getOrderById = async (id) => {
       {
         model: Products,
         as: 'products',
-        attributes: { exclude: ['url_image'] },
+        attributes: { exclude: ['urlImage'] },
         through: { attributes: ['quantity'] },
       },
     ],
