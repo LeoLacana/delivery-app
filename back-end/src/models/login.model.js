@@ -4,7 +4,7 @@ const newToken = require('../auth/newToken.auth');
 
 const login = async (email, password) => {
   const user = await Users.findOne({
-    where: { email }
+    where: { email },
   });
   if (!user) return null;
   const hashPassword = md5(password);
@@ -16,10 +16,10 @@ const login = async (email, password) => {
     name: user.name,
     email: user.email,
     role: user.role,
-    token
+    token,
   };
 };
 
 module.exports = {
-  login
+  login,
 };
