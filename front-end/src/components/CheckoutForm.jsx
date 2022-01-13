@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import api from '../helper/api';
-
-const fetchApi = async (route, setState) => {
-  const { data } = await api.get(route);
-
-  setState(data);
-};
+import { getApi, postApi } from '../helper/api';
 
 function CheckoutForm({ cart }) {
   const [address, setAddress] = useState('');
@@ -17,22 +11,28 @@ function CheckoutForm({ cart }) {
   const redirect = useNavigate();
 
   useEffect(() => {
-    fetchApi('/sellers', setAllSellers);
+    getApi('/sellers', setAllSellers);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const totalPrice = cart.reduce(
       (acc, { price, quantity }) => acc + (price * quantity), 0,
     );
-    const response = await api.post('/customer/checkout', {
+
+    const products = cart.map(({ id, ...product }) => ({ productId: id, ...product }));
+
+    const response = await postApi('/customer/checkout', {
       sellerId: seller,
       totalPrice,
-      delivery_address: address,
-      delivery_number: number,
-      products: cart,
+      deliveryAddress: address,
+      deliveryNumber: number,
+      products,
     });
+
     if (response.message) return alert(response.message);
+
     redirect(`/customer/order/${response.data.saleId}`);
   };
 

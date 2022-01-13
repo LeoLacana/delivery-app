@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 import { Row, Col } from 'react-bootstrap';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import api from '../helper/api';
+import { getApi } from '../helper/api';
 
 import ProductCard from './ProductCard';
 import SeeCartButton from './SeeCartButton';
-
-const fetchApi = async (route, setState) => {
-  const { data } = await api.get(route);
-
-  setState(data);
-};
 
 function ProductsBoard() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetchApi('/customer/products', setProducts);
+    getApi('/customer/products', setProducts);
   }, []);
 
   return (

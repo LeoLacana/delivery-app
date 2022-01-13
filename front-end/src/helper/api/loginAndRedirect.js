@@ -1,8 +1,8 @@
-import api from './api';
+import { postApi } from './index';
 
 const loginAndRedirect = async ({ email, password }, redirect) => {
   try {
-    const { data: user } = await api.post('/login', { email, password });
+    const user = await postApi('/login', { email, password });
     const { role } = user;
 
     localStorage.setItem('user', JSON.stringify(user, null, 2));

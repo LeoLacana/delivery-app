@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import loginAndRedirect from '../helper/loginAndRedirect';
+import loginAndRedirect from '../helper/api/loginAndRedirect';
 import { validateEmail, validatePassword } from '../helper/validations';
 import '../helper/css/Login.css';
 

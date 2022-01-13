@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import HeaderUsers from '../components/HeaderUsers';
 import OrderCard from '../components/OrderCard';
-import api from '../helper/api';
-
-const fetchApi = async (route, setState) => {
-  const userStorage = localStorage.getItem('user');
-  const user = JSON.parse(userStorage);
-
-  const { data } = await api.get(route, {}, { token: user.token });
-
-  setState(data);
-};
+import { getApiWithToken } from '../helper/api';
 
 function Orders() {
   const [sales, setSales] = useState([{}]);
 
   useEffect(() => {
-    fetchApi('/customer/orders', setSales);
+    getApiWithToken('/customer/orders', setSales);
   }, []);
 
   return (
