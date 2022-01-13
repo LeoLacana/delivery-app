@@ -1,4 +1,8 @@
-const { sellerNamesModel, sellerOrdersModel, sellerOrderByIdModel, updateOderStatusModel } = require('../models/seller.model');
+const {
+  sellerNamesModel,
+  sellerOrdersModel,
+  sellerOrderByIdModel,
+  updateOderStatusModel } = require('../models/seller.model');
 const verifyToken = require('../auth/verify.token');
 
 const errorMessage = 'Erro interno no servidor';
@@ -44,10 +48,10 @@ const updateOderStatusCtrl = async (req, res) => {
   try {
     await updateOderStatusModel(id, status);
     return res.status(200).end();
-  } catch(error) {
-    return res.status(500).json({ message: errorMessage});
+  } catch (error) {
+    return res.status(500).json({ message: errorMessage });
   }
-}
+};
 
 module.exports = {
   sellerNamesCtrl,

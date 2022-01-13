@@ -47,7 +47,7 @@ const updateOderStatusModel = async (id, status) => {
     { status },
     { where: { id } },
   );
-}
+};
 
 module.exports = {
   sellerNamesModel,
