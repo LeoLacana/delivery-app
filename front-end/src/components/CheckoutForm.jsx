@@ -34,14 +34,14 @@ function CheckoutForm({ cart }) {
 
     try {
       const response = await api.post('/customer/checkout', {
-        seller_id: seller,
-        total_price: totalPrice,
-        delivery_address: address,
-        delivery_number: number,
+        sellerId: seller,
+        totalPrice,
+        deliveryAddress: address,
+        deliveryNumber: Number(number),
         products: cart,
       }, { headers: { Authorization: token } });
 
-      redirect(`/customer/order/${response.data.saleId}`);
+      redirect(`/customer/orders/${response.data.saleId}`);
     } catch (err) {
       alert(err.message);
     }

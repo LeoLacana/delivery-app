@@ -149,7 +149,7 @@ describe(requirement(20), () => {
   });
 });
 
-describe(requirement(21), () => {
+describe.only(requirement(21), () => {
   test("O avaliador testará se, após realizado o checkout, as alterações constarão no banco de dados", async () => {
     const { saleId, saleDate } = await action.customer.checkoutNewSale(
       page,
