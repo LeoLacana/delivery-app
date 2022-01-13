@@ -31,10 +31,14 @@ function OrderCard({ sales }) {
             <p
               data-testid={ `customer_orders__element-order-date-${sale.id}` }
             >
-              {sale.sale_date}
+              {sale.saleDate.replace(/T.*/i, '').split('-').reverse().join('/')}
 
             </p>
-            <p>{sale.total_price}</p>
+            <p
+              data-testid={ `customer_orders__element-card-price-${sale.id}` }
+            >
+              {Number(sale.totalPrice).toFixed(2).toString().replace('.', ',')}
+            </p>
           </button>
         ))
       }

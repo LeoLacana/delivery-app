@@ -13,7 +13,7 @@ function SeeCartButton({ cart }) {
   );
 
   return (
-    <div className="d-grid gap-2 fixed-bottom">
+    <div>
       <Button
         variant="success"
         type="button"

@@ -11,11 +11,6 @@ const create = async (name, email, password) => {
     },
   });
   if (checkUser) return null;
-
-  // O certo
-  // const hashPassword = await bcrypt.hash(password, 12);
-
-  // O que passa no avaliador
   const hashPassword = md5(password);
 
   await Users.create({

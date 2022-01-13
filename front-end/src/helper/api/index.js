@@ -22,7 +22,6 @@ export const getApiWithToken = async (route, setState) => {
 
   const response = await api.get(
     route,
-    {},
     { headers: { Authorization: token } },
   );
 

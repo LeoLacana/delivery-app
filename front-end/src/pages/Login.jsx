@@ -6,6 +6,18 @@ import loginAndRedirect from '../helper/api/loginAndRedirect';
 import { validateEmail, validatePassword } from '../helper/validations';
 import '../helper/css/Login.css';
 
+const redirectAlreadyLogged = (redirect) => {
+  const userStorage = localStorage.getItem('user');
+
+  if (!userStorage) return;
+
+  const user = JSON.parse(userStorage);
+
+  return user.role === 'customer'
+    ? redirect('/customer/products')
+    : redirect('/seller/orders');
+};
+
 function Login() {
   const redirect = useNavigate();
 
@@ -28,6 +40,8 @@ function Login() {
   };
 
   useEffect(validateData, [email, password]);
+
+  useEffect(() => redirectAlreadyLogged(redirect), []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

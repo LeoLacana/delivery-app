@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { getApi, postApi } from '../helper/api';
+import { getApi, postApiWithToken } from '../helper/api';
 
 function CheckoutForm({ cart }) {
+  const redirect = useNavigate();
+
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState(0);
   const [seller, setSeller] = useState('');
   const [allSellers, setAllSellers] = useState([]);
-  const redirect = useNavigate();
 
   useEffect(() => {
-    getApi('/sellers', setAllSellers);
+    getApi('/seller/names', setAllSellers);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -21,19 +22,25 @@ function CheckoutForm({ cart }) {
       (acc, { price, quantity }) => acc + (price * quantity), 0,
     );
 
-    const products = cart.map(({ id, ...product }) => ({ productId: id, ...product }));
+    const products = cart.map(({ id, quantity }) => ({ productId: id, quantity }));
 
-    const response = await postApi('/customer/checkout', {
-      sellerId: seller,
-      totalPrice,
-      deliveryAddress: address,
-      deliveryNumber: number,
-      products,
-    });
+    if (!localStorage.getItem('user')) return;
 
-    if (response.message) return alert(response.message);
+    const { token } = JSON.parse(localStorage.getItem('user'));
 
-    redirect(`/customer/order/${response.data.saleId}`);
+    try {
+      const response = await postApiWithToken('/customer/checkout', {
+        sellerId: seller,
+        totalPrice,
+        deliveryAddress: address,
+        deliveryNumber: Number(number),
+        products,
+      }, { headers: { Authorization: token } });
+
+      redirect(`/customer/orders/${response.saleId}`);
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (

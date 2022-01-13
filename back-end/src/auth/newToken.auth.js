@@ -8,8 +8,8 @@ const secretKey = require('fs').readFileSync(
   },
 ).trim();
 
-const newToken = (email, role) => {
-  const token = jwt.sign({ email, role }, secretKey);
+const newToken = (id, email, role) => {
+  const token = jwt.sign({ id, email, role }, secretKey);
   return token;
 };
 

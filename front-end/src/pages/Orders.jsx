@@ -4,7 +4,7 @@ import OrderCard from '../components/OrderCard';
 import { getApiWithToken } from '../helper/api';
 
 function Orders() {
-  const [sales, setSales] = useState([{}]);
+  const [sales, setSales] = useState([]);
 
   useEffect(() => {
     getApiWithToken('/customer/orders', setSales);

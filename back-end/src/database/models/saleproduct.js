@@ -4,8 +4,14 @@ module.exports = (sequelize, DataTypes) => {
   const SaleProduct = sequelize.define(
     'SalesProducts',
     {
-      sale_id: DataTypes.INTEGER,
-      product_id: DataTypes.INTEGER,
+      saleId: {
+        type: DataTypes.INTEGER,
+        field: 'sale_id',
+      },
+      productId: {
+        type: DataTypes.INTEGER,
+        field: 'product_id',
+      },
       quantity: DataTypes.INTEGER
     },
     {
@@ -18,14 +24,14 @@ module.exports = (sequelize, DataTypes) => {
     Sales.belongsToMany(Products, {
       as: 'products',
       through: SaleProduct,
-      foreignKey: 'sale_id',
-      otherKey: 'product_id'
+      foreignKey: 'saleId',
+      otherKey: 'productId'
     });
     Products.belongsToMany(Sales, {
       as: 'products',
       through: SaleProduct,
-      foreignKey: 'sale_id',
-      otherKey: 'product_id'
+      foreignKey: 'saleId',
+      otherKey: 'productId'
     });
   };
 

@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import CardButtons from './CardButtons';
 
 function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity }) {
-  const { id, name, price, url_image: urlImage } = product;
+  const { id, name, price, urlImage } = product;
 
   const productIsInCart = cart.find((cartItem) => cartItem.id === id);
   const productQuantity = productIsInCart ? productIsInCart.quantity : 0;
