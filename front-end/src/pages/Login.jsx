@@ -41,7 +41,7 @@ function Login() {
 
   useEffect(validateData, [email, password]);
 
-  useEffect(() => redirectAlreadyLogged(redirect), []);
+  useEffect(() => redirectAlreadyLogged(redirect), [redirect]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
