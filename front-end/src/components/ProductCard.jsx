@@ -12,7 +12,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardButtons from './CardButtons';
 
-import formatPrice from '../helper/formatPrice'
+import formatPrice from '../helper/formatPrice';
 
 function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity }) {
   const { id, name, price, urlImage } = product;
