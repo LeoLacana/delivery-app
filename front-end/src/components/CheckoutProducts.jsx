@@ -6,7 +6,7 @@ function CheckoutProducts({ cart, removeItem, page }) {
 
   useEffect(() => {
     setTotalPrice(cart.reduce(
-      (acc, { price, quantity }) => acc + (price * quantity), 0,
+      (acc, { price, quantity }) => acc + (Number(price) * Number(quantity)), 0,
     ));
   }, [cart]);
 
@@ -62,7 +62,7 @@ function CheckoutProducts({ cart, removeItem, page }) {
                       `customer_${page}__element-order-table-sub-total-${index}`
                     }
                   >
-                    {(Number(price) * quantity).toFixed(2).toString().replace('.', ',')}
+                    {(Number(price) * Number(quantity)).toFixed(2).toString().replace('.', ',')}
                   </td>
                   {page === 'checkout' ? (
                     <td
