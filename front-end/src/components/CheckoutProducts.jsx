@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+const calculateTotalPrice = (products) => {
+  const totalPrice = products.reduce((acc, product) => {
+    const { price, quantity } = product;
+    const subTotal = Number(price) * Number(quantity);
+    return acc + subTotal;
+  });
+
+  return totalPrice;
+};
+
 function CheckoutProducts({ cart, removeItem, page }) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    setTotalPrice(cart.reduce(
-      (acc, { price, quantity }) => acc + (Number(price) * Number(quantity)), 0,
-    ));
+    setTotalPrice(calculateTotalPrice(cart));
   }, [cart]);
 
   return (
