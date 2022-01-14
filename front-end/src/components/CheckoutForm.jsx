@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { getApi, postApiWithToken } from '../helper/api';
 
-function CheckoutForm({ cart }) {
+function CheckoutForm({ cart, resetCart }) {
   const redirect = useNavigate();
 
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState(0);
   const [seller, setSeller] = useState('');
   const [allSellers, setAllSellers] = useState([]);
+
+  const [error, setError] = useState('');
 
   useEffect(() => {
     getApi('/seller/names', setAllSellers);
@@ -24,22 +26,19 @@ function CheckoutForm({ cart }) {
 
     const products = cart.map(({ id, quantity }) => ({ productId: id, quantity }));
 
-    if (!localStorage.getItem('user')) return;
-
-    const { token } = JSON.parse(localStorage.getItem('user'));
-
     try {
       const response = await postApiWithToken('/customer/checkout', {
-        sellerId: seller,
+        sellerId: Number(seller),
         totalPrice,
         deliveryAddress: address,
-        deliveryNumber: Number(number),
+        deliveryNumber: Number(number).toString(),
         products,
-      }, { headers: { Authorization: token } });
+      });
 
       redirect(`/customer/orders/${response.saleId}`);
+      await resetCart();
     } catch (err) {
-      alert(err.message);
+      setError(err.message);
     }
   };
 
@@ -88,6 +87,11 @@ function CheckoutForm({ cart }) {
       >
         FINALIZAR PEDIDO
       </button>
+      {
+        error !== ''
+          ? <p>{error}</p>
+          : null
+      }
     </form>
   );
 }
@@ -96,4 +100,5 @@ export default CheckoutForm;
 
 CheckoutForm.propTypes = {
   cart: PropTypes.arrayOf(PropTypes.object),
+  resetCart: PropTypes.func,
 }.isRequired;

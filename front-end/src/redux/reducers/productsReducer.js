@@ -1,6 +1,7 @@
 import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
+  RESET_CART,
   UPDATE_PRODUCT_QUANTITY,
 } from '../actions';
 
@@ -27,6 +28,8 @@ function productsReducer(state = INITIAL_STATE, { type, payload }) {
       ...state,
       products: state.products.filter((product) => product.id !== payload.id),
     };
+  case RESET_CART:
+    return INITIAL_STATE;
   default:
     return state;
   }
