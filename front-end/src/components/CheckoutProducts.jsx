@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import formatPrice from '../helper/formatPrice';
+
 const calculateTotalPrice = (products) => {
   const totalPrice = products.reduce((acc, product) => {
     const { price, quantity } = product;
@@ -63,14 +65,14 @@ function CheckoutProducts({ cart, removeItem, page }) {
                       `customer_${page}__element-order-table-unit-price-${index}`
                     }
                   >
-                    { Number(price).toFixed(2).toString().replace('.', ',')}
+                    {formatPrice(Number(price))}
                   </td>
                   <td
                     data-testid={
                       `customer_${page}__element-order-table-sub-total-${index}`
                     }
                   >
-                    {(Number(price) * Number(quantity)).toFixed(2).toString().replace('.', ',')}
+                    {formatPrice(Number(price) * Number(quantity))}
                   </td>
                   {page === 'checkout' ? (
                     <td
@@ -99,7 +101,7 @@ function CheckoutProducts({ cart, removeItem, page }) {
               data-testid={ `customer_${page}__element-order-total-price` }
             >
               Total: R$
-              {totalPrice.toFixed(2).toString().replace('.', ',')}
+              {formatPrice(totalPrice)}
             </p>
           ) : (
             <p>
@@ -107,7 +109,7 @@ function CheckoutProducts({ cart, removeItem, page }) {
               <span
                 data-testid={ `customer_${page}__element-order-total-price` }
               >
-                {totalPrice.toFixed(2).toString().replace('.', ',')}
+                {formatPrice(totalPrice)}
               </span>
             </p>
           )

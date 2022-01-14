@@ -12,6 +12,8 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardButtons from './CardButtons';
 
+import formatPrice from '../helper/formatPrice'
+
 function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity }) {
   const { id, name, price, urlImage } = product;
 
@@ -75,7 +77,7 @@ function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity 
           <span
             data-testid={ `customer_products__element-card-price-${id}` }
           >
-            {` ${Number(price).toFixed(2).toString().replace('.', ',')}`}
+            {` ${formatPrice(Number(price))}`}
           </span>
         </ListGroupItem>
         <ListGroupItem style={ { display: 'flex' } }>
