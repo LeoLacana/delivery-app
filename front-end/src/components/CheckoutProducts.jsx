@@ -8,7 +8,7 @@ const calculateTotalPrice = (products) => {
     const { price, quantity } = product;
     const subTotal = Number(price) * Number(quantity);
     return acc + subTotal;
-  });
+  }, 0);
 
   return totalPrice;
 };

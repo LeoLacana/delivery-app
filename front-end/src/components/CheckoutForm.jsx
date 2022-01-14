@@ -26,21 +26,17 @@ function CheckoutForm({ cart, resetCart }) {
 
     const products = cart.map(({ id, quantity }) => ({ productId: id, quantity }));
 
-    if (!localStorage.getItem('user')) return;
-
-    const { token } = JSON.parse(localStorage.getItem('user'));
-
     try {
       const response = await postApiWithToken('/customer/checkout', {
-        sellerId: seller,
+        sellerId: Number(seller),
         totalPrice,
         deliveryAddress: address,
-        deliveryNumber: Number(number),
+        deliveryNumber: Number(number).toString(),
         products,
-      }, { headers: { Authorization: token } });
+      });
 
-      resetCart();
       redirect(`/customer/orders/${response.saleId}`);
+      await resetCart();
     } catch (err) {
       setError(err.message);
     }
