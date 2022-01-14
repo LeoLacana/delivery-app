@@ -78,7 +78,7 @@ function ProductCard({ product, cart, addToCart, removeFromCart, updateQuantity 
             {` ${Number(price).toFixed(2).toString().replace('.', ',')}`}
           </span>
         </ListGroupItem>
-        <ListGroupItem>
+        <ListGroupItem style={ { display: 'flex' } }>
           <CardButtons
             id={ id }
             quantity={ quantity }

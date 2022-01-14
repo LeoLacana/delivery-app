@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { getApi, postApiWithToken } from '../helper/api';
 
-function CheckoutForm({ cart }) {
+function CheckoutForm({ cart, resetCart }) {
   const redirect = useNavigate();
 
   const [address, setAddress] = useState('');
@@ -37,6 +37,7 @@ function CheckoutForm({ cart }) {
         products,
       }, { headers: { Authorization: token } });
 
+      resetCart();
       redirect(`/customer/orders/${response.saleId}`);
     } catch (err) {
       alert(err.message);
@@ -96,4 +97,5 @@ export default CheckoutForm;
 
 CheckoutForm.propTypes = {
   cart: PropTypes.arrayOf(PropTypes.object),
+  resetCart: PropTypes.func,
 }.isRequired;

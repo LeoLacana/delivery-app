@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-function CheckoutProducts({ cart, removeItem }) {
-  const totalPrice = cart.reduce(
-    (acc, { price, quantity }) => acc + (price * quantity), 0,
-  );
+function CheckoutProducts({ cart, removeItem, page }) {
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    setTotalPrice(cart.reduce(
+      (acc, { price, quantity }) => acc + (price * quantity), 0,
+    ));
+  });
   return (
     <>
       <table>
@@ -15,7 +19,7 @@ function CheckoutProducts({ cart, removeItem }) {
             <th>Quantidade</th>
             <th>Valor unitário</th>
             <th>Sub-total</th>
-            <th>Remover Item</th>
+            {page === 'checkout' ? <th>Remover Item</th> : null}
           </tr>
         </thead>
         <tbody>
@@ -26,63 +30,79 @@ function CheckoutProducts({ cart, removeItem }) {
                 <tr key={ index }>
                   <td
                     data-testid={
-                      `customer_checkout__element-order-table-item-number-${index}`
+                      `customer_${page}__element-order-table-item-number-${index}`
                     }
                   >
                     {index + 1}
                   </td>
                   <td
                     data-testid={
-                      `customer_checkout__element-order-table-name-${index}`
+                      `customer_${page}__element-order-table-name-${index}`
                     }
                   >
                     {name}
                   </td>
                   <td
                     data-testid={
-                      `customer_checkout__element-order-table-quantity-${index}`
+                      `customer_${page}__element-order-table-quantity-${index}`
                     }
                   >
                     {quantity}
                   </td>
                   <td
                     data-testid={
-                      `customer_checkout__element-order-table-unit-price-${index}`
+                      `customer_${page}__element-order-table-unit-price-${index}`
                     }
                   >
                     { Number(price).toFixed(2).toString().replace('.', ',')}
                   </td>
                   <td
                     data-testid={
-                      `customer_checkout__element-order-table-sub-total-${index}`
+                      `customer_${page}__element-order-table-sub-total-${index}`
                     }
                   >
                     {(Number(price) * quantity).toFixed(2).toString().replace('.', ',')}
                   </td>
-                  <td
-                    data-testid={
-                      `customer_checkout__element-order-table-remove-${index}`
-                    }
-                  >
-                    <button
-                      type="button"
-                      onClick={ () => removeItem(id) }
+                  {page === 'checkout' ? (
+                    <td
+                      data-testid={
+                        `customer_${page}__element-order-table-remove-${index}`
+                      }
                     >
-                      Remover
-                    </button>
-                  </td>
+                      <button
+                        type="button"
+                        onClick={ () => removeItem(id) }
+                      >
+                        Remover
+                      </button>
+                    </td>
+                  ) : null}
                 </tr>
               );
             })
           }
         </tbody>
       </table>
-      <p
-        data-testid="customer_checkout__element-order-total-price"
-      >
-        Total: R$
-        {totalPrice.toFixed(2).toString().replace('.', ',')}
-      </p>
+      {
+        page === 'checkout'
+          ? (
+            <p
+              data-testid={ `customer_${page}__element-order-total-price` }
+            >
+              Total: R$
+              {totalPrice.toFixed(2).toString().replace('.', ',')}
+            </p>
+          ) : (
+            <p>
+              Total: R$
+              <span
+                data-testid={ `customer_${page}__element-order-total-price` }
+              >
+                {totalPrice.toFixed(2).toString().replace('.', ',')}
+              </span>
+            </p>
+          )
+      }
     </>
   );
 }
@@ -90,6 +110,11 @@ function CheckoutProducts({ cart, removeItem }) {
 export default CheckoutProducts;
 
 CheckoutProducts.propTypes = {
-  cart: PropTypes.arrayOf(PropTypes.object),
+  cart: PropTypes.arrayOf(PropTypes.object).isRequired,
   removeItem: PropTypes.func,
-}.isRequired;
+  page: PropTypes.string.isRequired,
+};
+
+CheckoutProducts.defaultProps = {
+  removeItem: () => {},
+};

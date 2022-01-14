@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const buttonCardStyle = {
-  display: 'flex',
-};
-
 const inputStyle = {
   width: '80%',
 };
@@ -17,7 +13,7 @@ const buttonStyle = {
 
 function CardButtons({ handleQuantityButton, id, quantity }) {
   return (
-    <div style={ buttonCardStyle }>
+    <>
       <Button
         variant="danger"
         style={ buttonStyle }
@@ -44,7 +40,7 @@ function CardButtons({ handleQuantityButton, id, quantity }) {
       >
         +
       </Button>
-    </div>
+    </>
   );
 }
 
