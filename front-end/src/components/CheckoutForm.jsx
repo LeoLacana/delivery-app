@@ -11,6 +11,8 @@ function CheckoutForm({ cart, resetCart }) {
   const [seller, setSeller] = useState('');
   const [allSellers, setAllSellers] = useState([]);
 
+  const [error, setError] = useState('');
+
   useEffect(() => {
     getApi('/seller/names', setAllSellers);
   }, []);
@@ -40,7 +42,7 @@ function CheckoutForm({ cart, resetCart }) {
       resetCart();
       redirect(`/customer/orders/${response.saleId}`);
     } catch (err) {
-      alert(err.message);
+      setError(err.message);
     }
   };
 
@@ -89,6 +91,11 @@ function CheckoutForm({ cart, resetCart }) {
       >
         FINALIZAR PEDIDO
       </button>
+      {
+        error !== ''
+          ? <p>{error}</p>
+          : null
+      }
     </form>
   );
 }

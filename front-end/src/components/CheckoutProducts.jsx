@@ -8,7 +8,8 @@ function CheckoutProducts({ cart, removeItem, page }) {
     setTotalPrice(cart.reduce(
       (acc, { price, quantity }) => acc + (price * quantity), 0,
     ));
-  });
+  }, [cart]);
+
   return (
     <>
       <table>

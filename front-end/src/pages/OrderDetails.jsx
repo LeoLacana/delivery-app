@@ -23,7 +23,9 @@ function OrderDetails() {
   const [order, setOrder] = useState({ loading: true, products: [] });
   const [products, setProducts] = useState([]);
 
-  useEffect(() => getApi(`/customer/orders/${orderId}`, setOrder), []);
+  useEffect(() => {
+    getApi(`/customer/orders/${orderId}`, setOrder);
+  }, [orderId]);
 
   useEffect(() => {
     setProducts(adjustProductsObject(order));
